@@ -9,4 +9,4 @@ else
 fi
 
 ndk build/tools/build-cxx-stl.sh --stl=libc++ --ndk-dir=$NDK --abis=armeabi-v7a --verbose --verbose --verbose --build-dir=${BUILD_DIR} ${TOOLCHAIN_FLAG} -j$PARALLEL
-ndk build/tools/make-standalone-toolchain.sh --platform=android-${API_VERSION} --llvm-version=$LLVM_VERSION --install-dir=${INSTALL_DIR} --arch=arm --toolchain=arm-linux-androideabi-4.8
+ndk build/tools/make-standalone-toolchain.sh --stl=libc++ --platform=android-${API_VERSION} --llvm-version=$LLVM_VERSION --install-dir=${INSTALL_DIR} --arch=arm --toolchain=arm-linux-androideabi-4.8

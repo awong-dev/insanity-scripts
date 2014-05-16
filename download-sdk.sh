@@ -21,15 +21,13 @@ if [ ! -d "adt-bundle-linux-x86_64" ]; then
 fi
 
 # Download the release toolchains.
-ANDROID_TOOLCHAIN_ROOT="android-ndk-r9d-linux"
-
-X86_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-x86.tar.bz2"
-X86_64_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-x86_64.tar.bz2"
-if [ ! -f "${X86_TARBZ}" ]; then
-  curl -o "${X86_TARBZ}" "http://dl.google.com/android/ndk/${X86_TARBZ}"
+if [ ! -f "${ANDROID_TOOLCHAIN_X86_TARBZ}" ]; then
+  curl -o "${ANDROID_TOOLCHAIN_X86_TARBZ}" \
+      "http://dl.google.com/android/ndk/${ANDROID_TOOLCHAIN_X86_TARBZ}"
 fi
-if [ ! -f "${X86_64_TARBZ}" ]; then
-  curl -o "${X86_64_TARBZ}" "http://dl.google.com/android/ndk/${X86_64_TARBZ}"
+if [ ! -f "${ANDROID_TOOLCHAIN_X86_64_TARBZ}" ]; then
+  curl -o "${ANDROID_TOOLCHAIN_X86_64_TARBZ}" \
+      "http://dl.google.com/android/ndk/${ANDROID_TOOLCHAIN_X86_64_TARBZ}"
 fi
 
 # Grab depot tools.
