@@ -1,0 +1,43 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(dirname $0)"
+. "$SCRIPT_DIR/env.sh"
+
+LOCAL_LIBS=/tmp/ndk-android-libs
+LOCAL_BIN=/tmp/ndk-test-bin
+GDBSERVER=$NDK/prebuilt/android-arm/gdbserver/gdbserver
+GDB=$NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gdb
+#/tmp/ndk-api9-arm/bin/arm-linux-androideabi-gdb
+
+if [ ! -d $LOCAL_LIBS/system/lib ]; then
+  mkdir -p $LOCAL_LIBS/system/lib
+  mkdir -p $LOCAL_BIN
+
+  #1. Download all shared libs from phone to disk.
+  adb pull /system/lib $LOCAL_LIBS/system/lib
+
+  #2. Push gdbserver to the phone.
+  adb push $GDBSERVER /data/local/tmp/
+fi
+
+#3. Port forward
+adb forward tcp:5039 tcp:5039
+
+#4. Grab the binaries off the phone.
+rm -f $LOCAL_BIN/*
+adb pull /data/local/tmp/libcxx/ $LOCAL_BIN
+
+#5. Determine Binary name
+BINARY=$(basename $(ls $LOCAL_BIN/testit_*))
+
+#6. Run gdbserver on the phone.
+adb shell LD_LIBRARY_PATH=/data/local/tmp/libcxx /data/local/tmp/gdbserver :5039 /data/local/tmp/libcxx/$BINARY &
+sleep 1
+
+#7. Run gdb
+$GDB \
+  -ex "set solib-search-path $LOCAL_BIN:$LOCAL_LIBS/system/lib" \
+  -ex "set solib-absolute-prefix $LOCAL_LIBS" \
+  -ex "target remote :5039" \
+  -ex "break main" -ex "continue" \
+  $LOCAL_BIN/$BINARY
