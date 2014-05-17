@@ -2,7 +2,7 @@
 
 # Don't mess up the shell if this is interactive.
 if [ -z "$PS1" ]; then
-  if [ ! -z "$INSANITY_VERBOSE" ]; then
+  if [ ! -z "$VERBOSE" ]; then
     set -x
   fi
   set -e
@@ -17,6 +17,7 @@ NDK=${PWD/ndk\/*/ndk}
 : ${INSTALL_DIR:="/tmp/ndk-api${API_VERSION}-arm-${TOOLCHAIN}"}
 : ${SRC_DIR:="/tmp/ndk-${USER}"}
 : ${NDK_DOWNLOAD_DIR:="/tmp/ndk-${USER}-download"}
+: ${ABIS:=armeabi-v7a}
 
 ANDROID_TOOLCHAIN_ROOT="android-ndk-r${API_VERSION}d"
 ANDROID_TOOLCHAIN_X86_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-linux-x86.tar.bz2"
