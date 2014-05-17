@@ -14,10 +14,10 @@ repo sync
 NDK=`pwd`/ndk
 cd ndk
 SOURCE_PATHS="\
-    '${ANDROID_TOOLCHAIN_ROOT}/platforms/' \
-    '${ANDROID_TOOLCHAIN_ROOT}/toolchains/' \
-    '${ANDROID_TOOLCHAIN_ROOT}/prebuilt/' \
-    '${ANDROID_TOOLCHAIN_ROOT}/sources/' \
+    ${ANDROID_TOOLCHAIN_ROOT}/platforms/ \
+    ${ANDROID_TOOLCHAIN_ROOT}/toolchains/ \
+    ${ANDROID_TOOLCHAIN_ROOT}/prebuilt/ \
+    ${ANDROID_TOOLCHAIN_ROOT}/sources/ \
 "
 
 tar xjf "${NDK_DOWNLOAD_DIR}/${ANDROID_TOOLCHAIN_X86_TARBZ}" --strip 1 ${SOURCE_PATHS}
