@@ -6,6 +6,10 @@ if [ ! -z "$PS1" ]; then
   return
 fi
 
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 SCRIPT_DIR=$(realpath ${BASH_SOURCE%/*})
 . "${SCRIPT_DIR}/common.sh"
 

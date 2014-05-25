@@ -11,13 +11,13 @@ mkdir -p "$NDK_DOWNLOAD_DIR"
 cd ${NDK_DOWNLOAD_DIR}
 
 # Download the adt.
-ADT_BUNDLE="adt-bundle-linux-x86_64-20140321"
+ADT_BUNDLE="adt-bundle-mac-x86_64-20140321"
 if [ ! -f "${ADT_BUNDLE}.zip" ]; then
   curl -o "${ADT_BUNDLE}.zip" "http://dl.google.com/android/adt/22.6.2/${ADT_BUNDLE}.zip"
 fi
-if [ ! -d "adt-bundle-linux-x86_64" ]; then
+if [ ! -d "adt-bundle-mac-x86_64" ]; then
   unzip "${ADT_BUNDLE}"
-  mv ${ADT_BUNDLE} adt-bundle-linux-x86_64
+  mv ${ADT_BUNDLE} adt-bundle-mac-x86_64
 fi
 
 # Download the release toolchains.

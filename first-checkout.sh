@@ -1,5 +1,9 @@
 #!/bin/bash
 
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 SCRIPT_DIR=$(realpath $(dirname $0))
 BOOTSTRAP_CHECKOUT=1
 . "${SCRIPT_DIR}/common.sh"
@@ -11,6 +15,8 @@ echo "---===--- Downloading SDK ..."
 ${SCRIPT_DIR}/download-sdk.sh
 echo "---===--- Creating the build environment ..."
 ${SCRIPT_DIR}/make-build-env.sh
+
+BOOTSTRAP_CHECKOUT=0
 
 cd ndk
 echo "---===--- Making toolchain ..."

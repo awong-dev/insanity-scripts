@@ -10,7 +10,8 @@ fi
 
 NDK=${PWD/ndk\/*/ndk}
 : ${LLVM_VERSION:=3.4}
-: ${PARALLEL:=$(nproc)}
+: ${PARALLEL:=$(nproc > /dev/null 2>&1 || echo 4)}
+: ${PLATFORM:=linux}
 : ${API_VERSION:=9}
 : ${TOOLCHAIN:=clang++}
 : ${BUILD_DIR:="/tmp/ndk-libcxx-${TOOLCHAIN}"}
@@ -19,9 +20,16 @@ NDK=${PWD/ndk\/*/ndk}
 : ${NDK_DOWNLOAD_DIR:="/tmp/ndk-${USER}-download"}
 : ${ABIS:=armeabi-v7a}
 
+if [ "${PLATFORM}" == "mac" ]; then
+  TOOLCHAIN_PLATFORM="darwin"
+else
+  TOOLCHAIN_PLATFORM="${PLATFORM}"
+fi
+echo $TOOLCHAIN_PLATFORM
+
 ANDROID_TOOLCHAIN_ROOT="android-ndk-r${API_VERSION}d"
-ANDROID_TOOLCHAIN_X86_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-linux-x86.tar.bz2"
-ANDROID_TOOLCHAIN_X86_64_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-linux-x86_64.tar.bz2"
+ANDROID_TOOLCHAIN_X86_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-${TOOLCHAIN_PLATFORM}-x86.tar.bz2"
+ANDROID_TOOLCHAIN_X86_64_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-${TOOLCHAIN_PLATFORM}-x86_64.tar.bz2"
 
 # Turn off some functionality if bootstraping for first checkout.
 if [ -z "$BOOTSTRAP_CHECKOUT" ]; then
