@@ -2,10 +2,14 @@
 
 . $(dirname $0)/common.sh
 
-if [ ${TOOLCHAIN} = "g++" ]; then
+if [ "${TOOLCHAIN}" = "g++" ]; then
   TOOLCHAIN_FLAG="--gcc-version=4.8"
-else
+elif [ "${TOOLCHAIN}" = "clang++" ]; then
+  export LLVM_VERSION
   TOOLCHAIN_FLAG="--llvm-version=$LLVM_VERSION"
+else
+  echo "Unknown toolchain: $TOOLCHAIN"
+  exit 1
 fi
 
 ndk build/tools/build-cxx-stl.sh --stl=libc++ --ndk-dir=$NDK --abis=${ABIS} --verbose --verbose --verbose --build-dir=${BUILD_DIR} ${TOOLCHAIN_FLAG} -j$PARALLEL

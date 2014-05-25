@@ -6,8 +6,8 @@ unset PS1  # Bypass env.sh's guard against sourcing to interactive shell.
 source $(dirname $0)/env.sh
 
 # Don't use the default.
-if [[ "${OLD_PS1}" =~ 'bash-' ]]; then
+if [[ "${OLD_PS1}" =~ '\s-\v' ]]; then
   OLD_PS1="\h:\W \u\$ "
 fi
 
-exec env PS1="[!sane] $OLD_PS1" ${SHELL} --norc -i
+exec env PS1="[!sane $TOOLCHAIN] $OLD_PS1" bash --norc -i
