@@ -10,7 +10,6 @@ fi
 
 NDK=${PWD/ndk\/*/ndk}
 : ${LLVM_VERSION:=3.4}
-: ${PARALLEL:=$(nproc > /dev/null 2>&1 || echo 4)}
 : ${API_VERSION:=9}
 : ${TOOLCHAIN:=clang++}
 : ${BUILD_DIR:="/tmp/ndk-libcxx-${TOOLCHAIN}"}
@@ -24,10 +23,12 @@ if [ -z "${PLATFORM}" ]; then
     darwin*)
       PLATFORM="mac"
       TOOLCHAIN_PLATFORM="darwin"
+      PARALLEL=$(sysctl -n hw.ncpu)
     ;;
     linux*)
       PLATFORM="linux"
       TOOLCHAIN_PLATFORM="linux"
+      PARALLEL=$(grep -c -e processor /proc/cpuinfo)
     ;;
   esac
 fi
