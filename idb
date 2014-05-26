@@ -6,8 +6,7 @@ SCRIPT_DIR="$(dirname $0)"
 LOCAL_LIBS=/tmp/ndk-android-libs
 LOCAL_BIN=/tmp/ndk-test-bin
 GDBSERVER=$NDK/prebuilt/android-arm/gdbserver/gdbserver
-GDB=$NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gdb
-#/tmp/ndk-api9-arm/bin/arm-linux-androideabi-gdb
+GDB=$NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/${TOOLCHAIN_PLATFORM}-x86_64/bin/arm-linux-androideabi-gdb
 
 if [ ! -d $LOCAL_LIBS/system/lib ]; then
   mkdir -p $LOCAL_LIBS/system/lib
@@ -31,7 +30,7 @@ adb pull /data/local/tmp/libcxx/ $LOCAL_BIN
 BINARY=$(basename $(ls $LOCAL_BIN/testit_*))
 
 #6. Run gdbserver on the phone.
-adb shell LD_LIBRARY_PATH=/data/local/tmp/libcxx /data/local/tmp/gdbserver :5039 /data/local/tmp/libcxx/$BINARY &
+adb shell LD_LIBRARY_PATH=/data/local/tmp/libcxx LIBUNWIND_PRINT_UNWINDING=1 /data/local/tmp/gdbserver :5039 /data/local/tmp/libcxx/$BINARY &
 sleep 1
 
 #7. Run gdb
