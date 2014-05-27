@@ -2,7 +2,7 @@
 
 # Don't mess up the shell if this is interactive.
 if [ -z "$PS1" ]; then
-  if [ ! -z "$VERBOSE" ]; then
+  if [ -n "$VERBOSE" ]; then
     set -x
   fi
   set -e

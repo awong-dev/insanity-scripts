@@ -12,5 +12,9 @@ else
   exit 1
 fi
 
-ndk build/tools/build-cxx-stl.sh --stl=libc++ --ndk-dir=$NDK --abis=${ABIS} --verbose --verbose --verbose --build-dir=${BUILD_DIR} ${TOOLCHAIN_FLAG} -j$PARALLEL --with-debug-info
+if [ -n "$VERBOSE" ]; then
+  VERBOSE_FLAGS="--verbose --verbose --verbose"
+fi
+
+ndk build/tools/build-cxx-stl.sh --stl=libc++ --ndk-dir=$NDK --abis=${ABIS} ${VERBOSE_FLAGS} --build-dir=${BUILD_DIR} ${TOOLCHAIN_FLAG} -j$PARALLEL --with-debug-info
 ndk build/tools/make-standalone-toolchain.sh --stl=libc++ --abis=${ABIS} --platform=android-${API_VERSION} ${TOOLCHAIN_FLAG} --install-dir=${INSTALL_DIR} --arch=arm --toolchain=arm-linux-androideabi-4.8
