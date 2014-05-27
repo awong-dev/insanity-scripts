@@ -37,6 +37,11 @@ ANDROID_TOOLCHAIN_ROOT="android-ndk-r${API_VERSION}d"
 ANDROID_TOOLCHAIN_X86_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-${TOOLCHAIN_PLATFORM}-x86.tar.bz2"
 ANDROID_TOOLCHAIN_X86_64_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-${TOOLCHAIN_PLATFORM}-x86_64.tar.bz2"
 
+# Needed by various android build scripts. Tells them we're using clang.
+if [ "${TOOLCHAIN}" = "clang++" ]; then
+  export LLVM_VERSION
+fi
+
 # Turn off some functionality if bootstraping for first checkout.
 if [ -z "$BOOTSTRAP_CHECKOUT" ]; then
   if [[ ! "${NDK}" =~ '/ndk' ]]; then
