@@ -14,6 +14,8 @@ fi
 
 if [ -n "$VERBOSE" ]; then
   VERBOSE_FLAGS="--verbose --verbose --verbose"
+else
+  VERBOSE_FLAGS="--verbose"  # Show build progress.
 fi
 
 ndk build/tools/build-cxx-stl.sh --stl=libc++ --ndk-dir=$NDK --abis=${ABIS} ${VERBOSE_FLAGS} --build-dir=${BUILD_DIR} ${TOOLCHAIN_FLAG} -j$PARALLEL --with-debug-info
