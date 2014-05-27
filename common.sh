@@ -22,16 +22,23 @@ if [ -z "${PLATFORM}" ]; then
   case $OSTYPE in
     darwin*)
       PLATFORM="mac"
-      TOOLCHAIN_PLATFORM="darwin"
-      PARALLEL=$(sysctl -n hw.ncpu)
     ;;
     linux*)
       PLATFORM="linux"
-      TOOLCHAIN_PLATFORM="linux"
-      PARALLEL=$(grep -c -e processor /proc/cpuinfo)
     ;;
   esac
 fi
+
+case $PLATFORM in
+  mac)
+    TOOLCHAIN_PLATFORM="darwin"
+    PARALLEL=$(sysctl -n hw.ncpu)
+  ;;
+  linux)
+    TOOLCHAIN_PLATFORM="linux"
+    PARALLEL=$(grep -c -e processor /proc/cpuinfo)
+  ;;
+esac
 
 ANDROID_TOOLCHAIN_ROOT="android-ndk-r${API_VERSION}d"
 ANDROID_TOOLCHAIN_X86_TARBZ="${ANDROID_TOOLCHAIN_ROOT}-${TOOLCHAIN_PLATFORM}-x86.tar.bz2"
