@@ -1,0 +1,26 @@
+Do this stuff first:
+
+  git clone https://github.com/awong-dev/insanity-scripts.git
+
+To use, you should be able to do:
+  path-to-scripts/first-checkout.sh
+  cd insanity/ndk
+  path-to-scripts/insanity-shell.sh
+  cd sources/cxx-stl/llvm-libc++/libcxx/test/utilities/time/time.clock/time.clock.system
+  TEST_PREFIX=now run-tests.sh
+
+A number of us found that the build would fail, but running this ourselves fixed it after:
+  path-to-scripts/build-libcxx.sh
+
+Make sure you have a github account. Put your ssh public key in your account.
+
+We'll be working from here: https://github.com/awong-dev/ndk/tree/master
+
+Once you've done that, do this:
+
+  cd insanity/ndk
+  git remote add origin git@github.com:awong-dev/ndk.git
+  git fetch origin
+  git checkout -b $USER-work origin/master
+
+Now you have a ''$USER-work'' branch that you can push and request merges from into master on the github website.
