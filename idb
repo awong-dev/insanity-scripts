@@ -30,7 +30,7 @@ adb pull /data/local/tmp/libcxx/ $LOCAL_BIN
 BINARY=$(basename $(ls $LOCAL_BIN/testit_*))
 
 #6. Run gdbserver on the phone.
-adb shell LD_LIBRARY_PATH=/data/local/tmp/libcxx LIBUNWIND_PRINT_UNWINDING=1 /data/local/tmp/gdbserver :5039 /data/local/tmp/libcxx/$BINARY &
+adb shell LD_LIBRARY_PATH=/data/local/tmp/libcxx LIBUNWIND_PRINT_UNWINDING=1 sh -c "cd /data/local/tmp/libcxx; /data/local/tmp/gdbserver :5039 $BINARY" &
 sleep 1
 
 #7. Run gdb
