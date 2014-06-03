@@ -9,4 +9,8 @@ if [ ${TOOLCHAIN} = "clang++" ]; then
   EXTRA_FLAGS=--with-compiler-rt
 fi
 
-PATH="${INSTALL_DIR}/bin:${PATH}" "${TESTIT_DIR}/testit_android" --abi=armeabi-v7a --verbose --verbose --verbose --cxx=arm-linux-androideabi-${TOOLCHAIN} ${EXTRA_FLAGS} "$@"
+if [ -n "$VERBOSE" ]; then
+  VERBOSE_FLAGS="--verbose --verbose --verbose"
+fi
+
+PATH="${INSTALL_DIR}/bin:${PATH}" "${TESTIT_DIR}/testit_android" --abi=armeabi-v7a ${VERBOSE_FLAGS} -Os --cxx=arm-linux-androideabi-${TOOLCHAIN} ${EXTRA_FLAGS} "$@"
