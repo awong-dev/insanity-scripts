@@ -13,4 +13,10 @@ if [ -n "$VERBOSE" ]; then
   VERBOSE_FLAGS="--verbose --verbose --verbose"
 fi
 
-PATH="${INSTALL_DIR}/bin:${PATH}" "${TESTIT_DIR}/testit_android" --abi=armeabi-v7a ${VERBOSE_FLAGS} --cxx=arm-linux-androideabi-${TOOLCHAIN} ${EXTRA_FLAGS} "$@"
+ABI=armeabi-v7a
+if [ "$1" == "--hard" ]; then
+  ABI=armeabi-v7a-hard
+  shift
+fi
+
+PATH="${INSTALL_DIR}/bin:${PATH}" "${TESTIT_DIR}/testit_android" --abi=${ABI} ${VERBOSE_FLAGS} --cxx=arm-linux-androideabi-${TOOLCHAIN} ${EXTRA_FLAGS} "$@"
