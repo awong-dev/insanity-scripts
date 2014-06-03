@@ -5,9 +5,7 @@ SCRIPT_DIR="$(dirname $0)"
 
 TESTIT_DIR=${PWD/test\/*/test}
 
-if [ ${TOOLCHAIN} = "clang++" ]; then
-  EXTRA_FLAGS=--with-compiler-rt
-fi
+EXTRA_FLAGS=--with-compiler-rt
 
 if [ -n "$VERBOSE" ]; then
   VERBOSE_FLAGS="--verbose --verbose --verbose"
